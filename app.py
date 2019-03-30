@@ -30,7 +30,7 @@ def apijson():
         }
         print(diccionario)
     #Manejo del json que se recibe de los sensores
-    return ''
+    return jsonify(diccionario)
 
 if __name__ == '__main__':
     app.run('0.0.0.0')
