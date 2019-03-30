@@ -20,10 +20,10 @@ def apijson():
     if request.method == 'POST':
         #result = jsonify(request.form)
         #new_user = root.child('registers').push(request.form)
-        distInicial = request.form.getlist('distanciaInicial')[0]
-        distFinal = request.form.getlist('distanciaFinal')[0]
-        sonido = request.form.getlist('sonido')[0]
-        velocidad = request.form.getlist('velocidad')[0]
+        distInicial = int(request.form.getlist('distanciaInicial')[0])
+        distFinal = int(request.form.getlist('distanciaFinal')[0])
+        sonido = int(request.form.getlist('sonido')[0])
+        velocidad = int(request.form.getlist('velocidad')[0])
         diccionario = {
             'distInicial': distInicial,
             'distFinal': distFinal,
@@ -31,42 +31,42 @@ def apijson():
             'velocidad': velocidad,
         }
         print(diccionario)
-        if Arbol(4,5,120).esIntruso:
+        if Arbol(4, velocidad, 121).get('esIntruso'):
             print("intruso detectado")
 
     #Manejo del json que se recibe de los sensores
     return jsonify(diccionario)
 
-def Arbol(self,horaEntrada,velocidadCaminado,tiempoPermanencia):
+def Arbol(horaEntrada,velocidadCaminado,tiempoPermanencia):
     explicacion = {
-        esIntruso: False,
-        horaEntrada: '',
-        velocidadCaminado: '',
-        tiempoPermanencia: ''
+        'esIntruso': False,
+        'horaEntrada': '',
+        'velocidadCaminado': '',
+        'tiempoPermanencia': ''
     }
 
     if(horaEntrada>=2 and horaEntrada<=4):
         if(velocidadCaminado>=9 and velocidadCaminado<=20):
             if(tiempoPermanencia>=5 and tiempoPermanencia<=120):
-                print("welcome home ")
+                print("welcome home")
             else:
                 print("welcome home")
-            
+    
         elif(tiempoPermanencia>=5 and tiempoPermanencia<=120):
             print("welcome home")
         else:
-            explicacion.esIntruso = True
+            explicacion['esIntruso'] = True
             print("stranger signal detected")
         
     elif(velocidadCaminado>=9 and velocidadCaminado<=20):
             if(tiempoPermanencia>=5 and tiempoPermanencia<=120):
                 print("welcome home ")
             else:
-                explicacion.esIntruso = True
+                explicacion['esIntruso'] = True
                 print("stranger signal detected")
             
     elif(tiempoPermanencia>=5 and tiempoPermanencia<=120):
-        explicacion.esIntruso = True
+        explicacion['esIntruso'] = True
         print("stranger signal detected")
     else:
         explicacion.esIntruso = True
