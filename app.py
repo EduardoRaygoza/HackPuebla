@@ -9,6 +9,8 @@ firebase_admin.initialize_app(cred, {
 })
 root = db.reference()
 
+
+
 @app.route('/')
 def hello():
     return render_template('form.html')
@@ -29,8 +31,48 @@ def apijson():
             'velocidad': velocidad,
         }
         print(diccionario)
+        if Arbol(4,5,120).esIntruso:
+            print("intruso detectado")
+
     #Manejo del json que se recibe de los sensores
     return jsonify(diccionario)
+
+def Arbol(self,horaEntrada,velocidadCaminado,tiempoPermanencia):
+    explicacion = {
+        esIntruso: False,
+        horaEntrada: '',
+        velocidadCaminado: '',
+        tiempoPermanencia: ''
+    }
+
+    if(horaEntrada>=2 and horaEntrada<=4):
+        if(velocidadCaminado>=9 and velocidadCaminado<=20):
+            if(tiempoPermanencia>=5 and tiempoPermanencia<=120):
+                print("welcome home ")
+            else:
+                print("welcome home")
+            
+        elif(tiempoPermanencia>=5 and tiempoPermanencia<=120):
+            print("welcome home")
+        else:
+            explicacion.esIntruso = True
+            print("stranger signal detected")
+        
+    elif(velocidadCaminado>=9 and velocidadCaminado<=20):
+            if(tiempoPermanencia>=5 and tiempoPermanencia<=120):
+                print("welcome home ")
+            else:
+                explicacion.esIntruso = True
+                print("stranger signal detected")
+            
+    elif(tiempoPermanencia>=5 and tiempoPermanencia<=120):
+        explicacion.esIntruso = True
+        print("stranger signal detected")
+    else:
+        explicacion.esIntruso = True
+        print("stranger signal detected")
+    return explicacion
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0')
